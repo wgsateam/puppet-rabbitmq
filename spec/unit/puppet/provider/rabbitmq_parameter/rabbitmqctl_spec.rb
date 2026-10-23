@@ -188,4 +188,12 @@ describe provider_class do
       provider.destroy
     end
   end
+
+  describe '#value=' do
+    it 'sets the new value of an existing parameter' do
+      provider.expects(:rabbitmqctl).with('set_parameter', '-p', '/', 'shovel', 'documentumShovel',
+                                          '{"src-uri":"amqp://","src-queue":"my-queue","dest-uri":"amqp://remote-server","dest-queue":"another-queue"}')
+      provider.value = resource[:value]
+    end
+  end
 end

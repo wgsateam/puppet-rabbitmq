@@ -64,6 +64,12 @@ Puppet::Type.type(:rabbitmq_parameter).provide(:rabbitmqctl, parent: Puppet::Pro
     set_parameter
   end
 
+  # mk_resource_methods would only record the new value in @property_hash: an existing
+  # parameter kept its old value while every run reported the change.
+  def value=(_value)
+    set_parameter
+  end
+
   def set_parameter
     vhost = resource[:name].rpartition('@').last
     key = resource[:name].rpartition('@').first
